@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Đơn Hàng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="admin.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">Quản Lý Đơn Hàng</h1>
+            <p class="text-gray-600">Hệ thống quản lý khách hàng và đơn hàng đơn giản</p>
+        </div>
+
+        <!-- Main View -->
+        <div id="main-view" class="main-view">
+            <!-- Add Customer Button -->
+            <div class="text-center mb-6">
+                <button id="add-customer-btn" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">
+                    + Thêm Khách Hàng
+                </button>
+            </div>
+
+            <!-- Customers List -->
+            <div id="customers-list" class="grid gap-4 mb-8">
+                <!-- Customer cards will be inserted here -->
+            </div>
+
+            <!-- Summary Button -->
+            <div class="text-center">
+                <button id="summary-btn" class="rainbow-btn text-white px-12 py-4 rounded-xl font-bold text-xl shadow-2xl transition-all duration-300 transform hover:scale-110">
+                    TỔNG KẾT
+                </button>
+            </div>
+        </div>
+
+        <!-- Customer Detail View -->
+        <div id="customer-view" class="customer-view hidden">
+            <div class="mb-6">
+                <button id="back-btn" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg">
+                    ← Quay lại
+                </button>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h2 id="customer-name" class="text-2xl font-bold text-gray-800 mb-4"></h2>
+                
+                <!-- Add Order Form -->
+                <div class="border-t pt-4">
+                    <h3 class="text-lg font-semibold mb-4">Tạo đơn hàng mới</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <input type="text" id="product-name" placeholder="Tên sản phẩm" class="border rounded-lg px-3 py-2">
+                        <input type="number" id="quantity" placeholder="Số lượng" class="border rounded-lg px-3 py-2" min="1">
+                        <input type="number" id="unit-price" placeholder="Đơn giá" class="border rounded-lg px-3 py-2" min="0">
+                        <button id="add-order-btn" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg">
+                            Tạo đơn
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders List -->
+            <div id="orders-list">
+                <!-- Orders will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Customer Modal -->
+    <div id="customer-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 class="text-xl font-bold mb-4">Thêm khách hàng mới</h3>
+            <input type="text" id="customer-name-input" placeholder="Tên khách hàng" class="w-full border rounded-lg px-3 py-2 mb-4">
+            <div class="flex gap-2">
+                <button id="confirm-add-customer" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex-1">
+                    Xác nhận
+                </button>
+                <button id="cancel-add-customer" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex-1">
+                    Hủy
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Order Modal -->
+    <div id="order-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 class="text-xl font-bold mb-4">Sửa đơn hàng</h3>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">Số tiền thanh toán thêm</label>
+                <input type="number" id="paid-amount" class="w-full border rounded-lg px-3 py-2" min="0">
+                <p class="text-xs text-gray-500 mt-1">Nhập số tiền muốn thanh toán thêm (không phải tổng)</p>
+            </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium mb-2">Trạng thái giao hàng</label>
+                <select id="delivery-status" class="w-full border rounded-lg px-3 py-2">
+                    <option value="chưa giao">Chưa giao</option>
+                    <option value="đã giao">Đã giao</option>
+                </select>
+            </div>
+            <div class="flex gap-2">
+                <button id="confirm-edit-order" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg flex-1">
+                    Cập nhật
+                </button>
+                <button id="cancel-edit-order" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg flex-1">
+                    Hủy
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Modal -->
+    <div id="summary-modal" class="modal-overlay hidden">
+        <div class="modal-content text-center">
+            <h2 class="text-3xl font-bold text-green-600 mb-4">🎉 CHÚC MỪNG! 🎉</h2>
+            <div id="summary-content" class="mb-6">
+                <!-- Summary content will be inserted here -->
+            </div>
+            <button id="confirm-summary" class="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-bold text-lg">
+                OK
+            </button>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
